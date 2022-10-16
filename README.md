@@ -328,3 +328,9 @@ package.json
     }
   }
 ```
+
+## Config
+
+```sh
+npm install @nestjs/config
+```
