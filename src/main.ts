@@ -1,9 +1,13 @@
 import { NestFactory } from "@nestjs/core";
 
 import { AppModule } from "./app.module";
+import { CustomLoggerService } from "./logger/logger.service";
 
 export async function main(port: number): Promise<void> {
-    const app = await NestFactory.create(AppModule, {});
+    const app = await NestFactory.create(AppModule, {
+        bufferLogs: true,
+    });
+    app.useLogger(app.get(CustomLoggerService));
     app.listen(port);
 }
 
