@@ -28,21 +28,29 @@ services:
   #   working_dir: /app
   #   tty: true
 
-  prod:
-    image: gcr.io/distroless/nodejs-debian11:16
-    container_name: nest9-container-prod
-    environment:
-      LANG: C.UTF-8
-      NODE_ENV: production
-      TZ: UTC
+  # prod:
+  #   image: gcr.io/distroless/nodejs-debian11:16
+  #   container_name: nest9-container-prod
+  #   environment:
+  #     LANG: C.UTF-8
+  #     NODE_ENV: production
+  #     TZ: UTC
+  #   networks:
+  #     - default
+  #   ports:
+  #     - 3001:3000
+  #   volumes:
+  #     - ./dist:/app:ro
+  #   working_dir: /app
+  #   command: ['main.js']
+
+  redis:
+    image: redis:6.2.7-bullseye
+    container_name: nest9-container-redis
     networks:
       - default
     ports:
-      - 3001:3000
-    volumes:
-      - ./dist:/app:ro
-    working_dir: /app
-    command: ['main.js']
+      - 6379:6379
 
 networks:
   default:
