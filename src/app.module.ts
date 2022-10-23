@@ -5,6 +5,7 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { CacheModule } from "./cache/cache.module";
 import { config } from "./config";
+import { GraphqlModule } from "./graphql/graphql.module";
 import { LoggerModule } from "./logger/logger.module";
 
 @Module({
@@ -18,6 +19,7 @@ import { LoggerModule } from "./logger/logger.module";
         }),
         LoggerModule,
         CacheModule,
+        GraphqlModule,
     ],
     providers: [AppService],
     controllers: [AppController],
