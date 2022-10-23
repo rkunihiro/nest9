@@ -25,7 +25,6 @@ const options: BuildOptions = {
         // TODO: 以後dependenciesに追加したものを以下から削除します
         "@nestjs/microservices",
         "@nestjs/websockets",
-        "cache-manager",
         "class-transformer",
         "class-validator",
         "fsevents",
