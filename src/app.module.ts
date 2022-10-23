@@ -1,10 +1,9 @@
-import { CacheModule, Module } from "@nestjs/common";
-import { ConfigModule, ConfigService } from "@nestjs/config";
-// eslint-disable-next-line import/no-named-as-default
-import redisStore from "cache-manager-ioredis";
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
+import { CacheModule } from "./cache/cache.module";
 import { config } from "./config";
 import { LoggerModule } from "./logger/logger.module";
 
@@ -17,20 +16,8 @@ import { LoggerModule } from "./logger/logger.module";
             envFilePath: [".env"],
             load: [config],
         }),
-
         LoggerModule,
-
-        CacheModule.registerAsync({
-            imports: [ConfigModule],
-            inject: [ConfigService],
-            isGlobal: true,
-            useFactory: async (config: ConfigService) => {
-                return {
-                    store: redisStore,
-                    url: config.get<string>("redis.url") as string,
-                };
-            },
-        }),
+        CacheModule,
     ],
     providers: [AppService],
     controllers: [AppController],
