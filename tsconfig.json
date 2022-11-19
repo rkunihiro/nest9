@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-        // "incremental": true,
-        // "tsBuildInfoFile": "./.tsbuildinfo",
+        "incremental": true,
+        "tsBuildInfoFile": "./.tsbuildinfo",
 
         "target": "ES2021",
         "lib": ["ES2021"],

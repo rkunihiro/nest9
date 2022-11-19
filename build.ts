@@ -1,6 +1,7 @@
 import { resolve } from "node:path";
 
-import { analyzeMetafileSync, BuildOptions, buildSync } from "esbuild";
+import { analyzeMetafile, build, BuildOptions } from "esbuild";
+import esbuildPluginTsc from "esbuild-plugin-tsc";
 
 const options: BuildOptions = {
     entryPoints: {
@@ -21,23 +22,30 @@ const options: BuildOptions = {
     define: {
         "process.env.NODE_ENV": '"production"',
     },
+    plugins: [esbuildPluginTsc()],
     external: [
         // TODO: 以後dependenciesに追加したものを以下から削除します
+        "@apollo/gateway",
+        "@apollo/subgraph",
         "@nestjs/microservices",
         "@nestjs/websockets",
-        "class-transformer",
-        "class-validator",
+        "apollo-server-fastify",
+        "class-transformer/storage",
         "fsevents",
+        "ts-morph",
     ],
 };
 
-try {
-    const { metafile } = buildSync(options);
-    if (metafile) {
-        const detail = analyzeMetafileSync(metafile);
-        console.log(detail);
+async function main(): Promise<void> {
+    try {
+        const { metafile } = await build(options);
+        if (metafile) {
+            const detail = await analyzeMetafile(metafile);
+            console.log(detail);
+        }
+    } catch (err) {
+        console.error(err);
+        process.exit(1);
     }
-} catch (err) {
-    console.error(err);
-    process.exit(1);
 }
+main();

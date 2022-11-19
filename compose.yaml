@@ -46,6 +46,7 @@ services:
       - ./dist:/app:ro
     working_dir: /app
     command: ['main.js']
+    init: true
 
   redis:
     image: redis:6.2.7-bullseye
