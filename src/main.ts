@@ -1,3 +1,6 @@
+import "reflect-metadata";
+
+import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 
 import { AppModule } from "./app.module";
@@ -8,6 +11,11 @@ export async function main(port: number): Promise<void> {
         bufferLogs: true,
     });
     app.useLogger(app.get(CustomLoggerService));
+    app.useGlobalPipes(
+        new ValidationPipe({
+            transform: true,
+        }),
+    );
     app.listen(port);
 }
 

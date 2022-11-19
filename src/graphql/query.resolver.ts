@@ -1,5 +1,6 @@
 import { UseInterceptors } from "@nestjs/common";
 import { Query, Resolver } from "@nestjs/graphql";
+import { GraphQLError } from "graphql";
 
 import { CacheInterceptor } from "./cache.interceptor";
 import { TodoType } from "./todo.type";
@@ -35,5 +36,17 @@ export class QueryResolver {
     @UseInterceptors(CacheInterceptor)
     getNow() {
         return new Date().toISOString();
+    }
+
+    @Query(() => String, {
+        name: "foo",
+        nullable: true,
+    })
+    foo() {
+        throw new GraphQLError("custom error message", {
+            extensions: {
+                code: 1234,
+            },
+        });
     }
 }
