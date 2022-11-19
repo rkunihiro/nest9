@@ -8,7 +8,7 @@ export class AppService {
      * @returns greeting message
      */
     public async getMessage(): Promise<string> {
-        this.logger.log("AppService#getMessage");
+        this.logger.verbose("AppService#getMessage");
         return "Hello,World!";
     }
 }

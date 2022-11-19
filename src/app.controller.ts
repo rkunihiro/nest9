@@ -1,10 +1,12 @@
-import { Controller, Get, Inject } from "@nestjs/common";
+import { Controller, Get, Inject, Logger } from "@nestjs/common";
 
 import { AppService } from "./app.service";
 import { CacheService } from "./cache/cache.service";
 
 @Controller("/")
 export class AppController {
+    private readonly logger = new Logger(AppController.name);
+
     constructor(
         @Inject(AppService)
         private readonly appService: AppService,
@@ -14,6 +16,7 @@ export class AppController {
 
     @Get("/")
     public async index() {
+        this.logger.verbose("AppController#index");
         return await this.appService.getMessage();
     }
 
